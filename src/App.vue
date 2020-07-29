@@ -1,13 +1,16 @@
 <template>
-  <h1>{{message}}</h1>
+  <Conversion :title="message"></Conversion>
 </template>
 <script>
+import Conversion from './containers/Conversion.vue';
 export default {
-  name: 'app',
   data () {
     return {
       message: 'Set up'
     }
+  },
+  components: {
+    Conversion
   }
 }
 </script>
