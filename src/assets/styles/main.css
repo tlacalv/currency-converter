@@ -16,4 +16,21 @@
   --gray-2: #79807E;
   --gray-3: #C6CCCB;
   --gray-4: #EBF2F1;
+
+  --secondary-0-op: #b5b53f50;
+}
+
+@font-face {
+  font-family: OpenSans-Regular;
+  src: url('../fonts/OpenSans-Regular.ttf');
+}
+@font-face {
+  font-family: OpenSans-SemiBold;
+  src: url('../fonts/OpenSans-SemiBold.ttf');
+}
+*{
+  font-family: 'OpenSans-Regular';
+}
+body {
+  
 }

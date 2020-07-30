@@ -1,8 +1,8 @@
 <template>
-  <Conversion :title="message"></Conversion>
+  <Home :title="message"></Home>
 </template>
 <script>
-import Conversion from './containers/Conversion.vue';
+import Home from './containers/Home.vue';
 export default {
   data () {
     return {
@@ -10,7 +10,7 @@ export default {
     }
   },
   components: {
-    Conversion
+    Home
   }
 }
 </script>

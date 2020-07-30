@@ -2,7 +2,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var path = require('path')
-
+console.log(process.env.NODE_ENV);
 module.exports = {
   entry: './src/main.js',
   output: {
@@ -38,6 +38,12 @@ module.exports = {
           'style-loader',
           'css-loader'
         ]
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: [
+          'file-loader',
+        ],
       },
     ]
   },
