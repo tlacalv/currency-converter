@@ -1,28 +1,80 @@
 <template>
   <div class="card">
     <div class=head>
-      <p>1 USD equals</p>
-      <h2>39.99 MXN</h2>
+      <p class="date">{{date}}</p>
+      <p>{{baseQuantity}} {{baseRate}} equals</p>
+      <h2>{{conversion}} {{targetRate}}</h2>
     </div>
     <div class="form">
       <form>
-        <input type="text" name="" id="">
-        <select>
-          <option value="example">Example</option>
-          <option value="example">Example</option>
+        <input type="text" name="" id="1" @keyup="currency1Change">
+        <select v-model="fristRate">
+          <option v-for="(value, name) in rates" :key="name" :value="{value, name}">{{name}}</option>
         </select>
-        <input type="text" name="" id="">
-        <select>
-          <option value="example">Example</option>
-          <option value="example">Example</option>
+        <input type="text" name="" id="2"  @keyup="currency2Change">
+        <select v-model="secondRate">
+          <option v-for="(value, name) in rates" :key="name" :value="{value, name}">{{name}}</option>
         </select>
       </form>
     </div>
   </div>
 </template>
 <script>
+import { getLatest } from '../api';
+
 export default {
-  
+  data () {
+    return {
+      fristRate: {},
+      secondRate: {},
+      baseQuantity: 0,
+      rates: {},
+      conversion: '',
+      baseRate: '',
+      targetRate: '',
+      date:''
+    }
+  },
+  methods: {
+    currency1Change: function (e) {
+      let value = parseFloat(e.target.value);
+      let conversion;
+      conversion = (value / this.fristRate.value) * this.secondRate.value;
+      this.conversion = conversion.toFixed(2);
+      this.in2.value = this.conversion;
+      this.baseRate = this.fristRate.name;
+      this.targetRate = this.secondRate.name;
+      this.baseQuantity = value;
+    },
+    currency2Change: function (e) {
+      let value = parseFloat(e.target.value);
+      let conversion;
+      conversion = (value / this.secondRate.value) * this.fristRate.value;
+      this.conversion = conversion.toFixed(2);
+      this.in1.value = this.conversion;
+      this.baseRate = this.secondRate.name;
+      this.targetRate = this.fristRate.name;
+      this.baseQuantity = value;
+    }
+  },
+  watch: {
+    // currency1: function (newVal, oldVal) {
+    //   this.baseQty = newVal;
+    //   this.in2.value = newVal * 2;
+    //   console.log(this.in2.placeholder)
+    // },
+    // currency2: function (newVal, oldVal) {
+    //   this.baseQty = newVal;
+    //   this.in1.value = newVal * 4;
+    // }
+  },
+  mounted: function () {
+    this.in1 = document.getElementById('1');
+    this.in2 = document.getElementById('2');
+    let latest = getLatest();
+    this.rates = latest.rates;
+    this.date = latest.date;
+  }
 }
 </script>
 <style scoped>
@@ -45,6 +97,9 @@ export default {
     font-size: 50px;
     font-family: 'OpenSans-SemiBold';
     color: var(--primary-0);
+  }
+  .date{
+    font-size: 16px;
   }
   .card {
     background: white;
