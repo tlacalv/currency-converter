@@ -7,20 +7,30 @@
     </div>
     <div class="form">
       <form>
-        <input type="text" name="" id="1" @keyup="currency1Change">
-        <select v-model="fristRate">
-          <option v-for="(value, name) in rates" :key="name" :value="{value, name}">{{name}}</option>
-        </select>
-        <input type="text" name="" id="2"  @keyup="currency2Change">
-        <select v-model="secondRate">
-          <option v-for="(value, name) in rates" :key="name" :value="{value, name}">{{name}}</option>
-        </select>
+        <InputCurrency
+          id="1"
+          @input-update="currency1Change">
+        </InputCurrency>
+        <SelectRate 
+          :rates="rates"
+          @select-currency="selectRate1">
+        </SelectRate>
+        <InputCurrency
+          id="2"
+          @input-update="currency2Change">
+        </InputCurrency>
+        <SelectRate 
+          :rates="rates"
+          @select-currency="selectRate2">
+        </SelectRate>
       </form>
     </div>
   </div>
 </template>
 <script>
 import { getLatest } from '../api';
+import SelectRate from './SelectRate.vue';
+import InputCurrency from './InputCurrency.vue';
 
 export default {
   data () {
@@ -35,9 +45,19 @@ export default {
       date:''
     }
   },
+  components: {
+    SelectRate,
+    InputCurrency,
+  },
   methods: {
+    selectRate1: function (e) {
+      this.fristRate=e;
+    },
+    selectRate2: function (e) {
+      this.secondRate=e;
+    },
     currency1Change: function (e) {
-      let value = parseFloat(e.target.value);
+      let value = e;
       let conversion;
       conversion = (value / this.fristRate.value) * this.secondRate.value;
       this.conversion = conversion.toFixed(2);
@@ -47,7 +67,7 @@ export default {
       this.baseQuantity = value;
     },
     currency2Change: function (e) {
-      let value = parseFloat(e.target.value);
+      let value = e;
       let conversion;
       conversion = (value / this.secondRate.value) * this.fristRate.value;
       this.conversion = conversion.toFixed(2);
@@ -56,17 +76,6 @@ export default {
       this.targetRate = this.fristRate.name;
       this.baseQuantity = value;
     }
-  },
-  watch: {
-    // currency1: function (newVal, oldVal) {
-    //   this.baseQty = newVal;
-    //   this.in2.value = newVal * 2;
-    //   console.log(this.in2.placeholder)
-    // },
-    // currency2: function (newVal, oldVal) {
-    //   this.baseQty = newVal;
-    //   this.in1.value = newVal * 4;
-    // }
   },
   mounted: function () {
     this.in1 = document.getElementById('1');
@@ -118,25 +127,5 @@ export default {
     grid-template-columns: 50% 50%;
     width: 600px;
     margin-bottom: 50px;
-  }
-  input, select {
-    margin-right: 30px;
-    margin-bottom: 15px;
-  }
-  select option {
-    font-family: 'OpenSans-Regular';
-  }
-  select, input {
-    color: var(--gray-2);
-    padding: 10px 15px;
-    border: 1px solid var(--gray-2);
-    border-radius: 5px;
-
-  }
-  select:focus, input:focus, select:active, input:active {
-    outline: none;
-    border: 1px solid;
-    border-color: var(--secondary-0);
-    box-shadow: 0 0 0 2px var(--secondary-0-op);
   }
 </style>
