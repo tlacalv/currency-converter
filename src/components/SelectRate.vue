@@ -1,5 +1,6 @@
 <template>
   <select v-model="selectedRate" @change="selectCurrency">
+    <option selected="true" disabled="disbled" :value="{}">Select currency</option>
     <option 
       v-for="(value, name) in rates" 
       :key="name" 

@@ -9,6 +9,7 @@
       <form>
         <InputCurrency
           id="1"
+          :default="setDefault('USD')"
           @input-update="currency1Change">
         </InputCurrency>
         <SelectRate 
@@ -32,6 +33,18 @@ import { getLatest } from '../api';
 import SelectRate from './SelectRate.vue';
 import InputCurrency from './InputCurrency.vue';
 
+let validNumber = (number) => {
+  if (isNaN(number) || number.length===0){
+    return false;
+  }
+  return true;
+}
+let emptyObject = (obj) => {
+  if(Object.keys(obj).length===0){
+    return true;
+  }
+  return false;
+}
 export default {
   data () {
     return {
@@ -50,14 +63,28 @@ export default {
     InputCurrency,
   },
   methods: {
+    setDefault: function(rate) {
+      return {
+        name: rate,
+        value: this.rates[rate],
+      }
+    },
     selectRate1: function (e) {
       this.fristRate=e;
+      this.currency1Change(this.in1.value);
     },
     selectRate2: function (e) {
       this.secondRate=e;
+      this.currency2Change(this.in2.value);
     },
     currency1Change: function (e) {
-      let value = e;
+      if(emptyObject(this.fristRate) || emptyObject(this.secondRate)){
+        return;
+      }
+      if(!validNumber(e)){
+        e=0;
+      }
+      let value = parseFloat(e);
       let conversion;
       conversion = (value / this.fristRate.value) * this.secondRate.value;
       this.conversion = conversion.toFixed(2);
@@ -67,7 +94,13 @@ export default {
       this.baseQuantity = value;
     },
     currency2Change: function (e) {
-      let value = e;
+      if(emptyObject(this.fristRate) || emptyObject(this.secondRate)){
+        return;
+      }
+      if(!validNumber(e)){
+        e=0;
+      }
+      let value = parseFloat(e);
       let conversion;
       conversion = (value / this.secondRate.value) * this.fristRate.value;
       this.conversion = conversion.toFixed(2);

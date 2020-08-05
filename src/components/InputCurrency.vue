@@ -5,8 +5,8 @@
 export default {
   methods: {
     updateValue: function(e) {
-      let value = parseFloat(e.target.value);
-      this.$emit('input-update', value);
+      
+      this.$emit('input-update', e.target.value);
     }
   }
 }
