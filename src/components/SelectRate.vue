@@ -5,7 +5,7 @@
       v-for="(value, name) in rates" 
       :key="name" 
       :value="{value, name}">
-        {{name}}
+        {{name}} {{symbols[name]}}
     </option>
   </select>
 </template>
@@ -16,7 +16,7 @@ export default {
       selectedRate: {}
     }
   },
-  props: ['rates'],
+  props: ['rates','symbols'],
   methods: {
     selectCurrency: function(e) {
       this.$emit('select-currency', this.selectedRate);

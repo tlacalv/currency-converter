@@ -14,6 +14,7 @@
         </InputCurrency>
         <SelectRate 
           :rates="rates"
+          :symbols="symbols"
           @select-currency="selectRate1">
         </SelectRate>
         <InputCurrency
@@ -22,6 +23,7 @@
         </InputCurrency>
         <SelectRate 
           :rates="rates"
+          :symbols="symbols"
           @select-currency="selectRate2">
         </SelectRate>
       </form>
@@ -29,7 +31,7 @@
   </div>
 </template>
 <script>
-import { getLatest } from '../api';
+import { getLatest, getSymbols } from '../api';
 import SelectRate from './SelectRate.vue';
 import InputCurrency from './InputCurrency.vue';
 
@@ -52,6 +54,7 @@ export default {
       secondRate: {},
       baseQuantity: 0,
       rates: {},
+      symbols: {},
       conversion: '',
       baseRate: '',
       targetRate: '',
@@ -114,6 +117,8 @@ export default {
     this.in1 = document.getElementById('1');
     this.in2 = document.getElementById('2');
     let latest = getLatest();
+    let symbols = getSymbols();
+    this.symbols = symbols.symbols;
     this.rates = latest.rates;
     this.date = latest.date;
   }
