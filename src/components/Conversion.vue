@@ -117,10 +117,14 @@ export default {
     this.in1 = document.getElementById('1');
     this.in2 = document.getElementById('2');
     let latest = getLatest();
-    let symbols = getSymbols();
-    this.symbols = symbols.symbols;
-    this.rates = latest.rates;
-    this.date = latest.date;
+    latest.then(latest => {
+      let symbols = getSymbols();
+      this.symbols = symbols.symbols;
+      this.rates = latest.rates;
+      this.rates= {...this.rates, EUR: 1};
+      this.date = latest.date;
+      
+    });
   }
 }
 </script>
