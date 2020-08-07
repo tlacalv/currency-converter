@@ -2,14 +2,17 @@
   <div class="container">
     <Conversion></Conversion>
     <div class="background"></div>
+    <Footer></Footer>
     <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/kiranshastry" title="Kiranshastry">Kiranshastry</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
   </div>
 </template>
 <script>
 import Conversion from '../components/Conversion.vue';
+import Footer from '../components/Footer.vue';
 export default {
   components: {
-    Conversion
+    Conversion,
+    Footer
   },
   props:['title']
 }
@@ -19,6 +22,7 @@ export default {
     height: 100vh;
     display: flex;
     align-items: center;
+    flex-direction: column;
     justify-content: center;
     position: relative;
     overflow: hidden;

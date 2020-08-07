@@ -40,6 +40,14 @@ module.exports = {
         ]
       },
       {
+        test: /\.(png|jpg|gif|svg)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]?[hash]',
+          esModule: false
+        }
+      },
+      {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         use: [
           'file-loader',
