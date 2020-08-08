@@ -13,8 +13,7 @@ export default {
   components: {
     Conversion,
     Footer
-  },
-  props:['title']
+  }
 }
 </script>
 <style scoped>

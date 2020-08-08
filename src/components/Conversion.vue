@@ -8,20 +8,24 @@
     <div class="form">
       <form>
         <InputCurrency
+          class="input1"
           id="1"
           :default="setDefault('USD')"
           @input-update="currency1Change">
         </InputCurrency>
         <SelectRate 
+          class="select1"
           :rates="rates"
           :symbols="symbols"
           @select-currency="selectRate1">
         </SelectRate>
         <InputCurrency
+          class="input2"
           id="2"
           @input-update="currency2Change">
         </InputCurrency>
         <SelectRate 
+          class="select2"
           :rates="rates"
           :symbols="symbols"
           @select-currency="selectRate2">
@@ -34,6 +38,7 @@
 import { getLatest, getSymbols } from '../api';
 import SelectRate from './SelectRate.vue';
 import InputCurrency from './InputCurrency.vue';
+import latest from '../mockups/latest.json';
 
 let validNumber = (number) => {
   if (isNaN(number) || number.length===0){
@@ -129,12 +134,12 @@ export default {
 }
 </script>
 <style scoped>
-.head {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  margin: 50px 0;
-}
+  .head {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 50px 0;
+  }
   p, h2 {
     padding: 0;
     margin: 0;
@@ -164,10 +169,41 @@ export default {
     flex-direction: column;
     align-items: center;
   }
+  .form {
+    max-width: 600px;
+    width: 95%;
+  }
   form {
     display: grid;
     grid-template-columns: 50% 50%;
-    width: 600px;
+    /* max-width: 600px;
+    width: 95%; */
     margin-bottom: 50px;
   }
+  /* responsive */
+  @media screen and (max-width: 768px) {
+    form {
+      grid-template-columns: 100%;
+      grid-template-rows: 1fr 1fr 1fr 1fr;
+    }
+    .select1 {
+      grid-row: 1 / 2;
+    }
+    .input1 {
+      grid-row: 2 / 3;
+    }
+    .select2 {
+      grid-row: 3 / 4;
+    }
+    .input2 {
+      grid-row: 4 / 5;
+    }
+    input, select {
+      margin-right: 0;
+    }
+    h2 {
+      font-size: 30px;
+    }
+  }
+
 </style>
