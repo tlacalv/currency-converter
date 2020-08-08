@@ -7,8 +7,8 @@ module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: 'buuild.js',
-    publicPath: '/'
+    filename: 'build.js',
+    publicPath: './'
   },
   module: {
     rules: [
