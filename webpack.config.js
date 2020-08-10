@@ -2,13 +2,18 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var path = require('path')
-console.log(process.env.NODE_ENV);
+let proba = {
+  loader:MiniCssExtractPlugin.loader,
+  options: {
+    publicPath: '../',
+  },
+}
 module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'build.js',
-    publicPath: './'
+    publicPath: process.env.NODE_ENV !== 'production' ? '/' : './'
   },
   module: {
     rules: [
@@ -32,11 +37,11 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          // {
-          //   loader: MiniCssExtractPlugin.loader,
-          // },
-          'style-loader',
-          'css-loader'
+          
+          process.env.NODE_ENV !== 'production'
+            ? 'style-loader'
+            : proba,
+          'css-loader',
         ]
       },
       {
@@ -49,9 +54,10 @@ module.exports = {
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: [
-          'file-loader',
-        ],
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]'
+        }
       },
     ]
   },
@@ -62,8 +68,12 @@ module.exports = {
       template: './index.html',
       filename: './index.html',
     }),
-    // new MiniCssExtractPlugin({
-    //   filename: 'assets/[name].css',
-    // }),
   ]
+}
+if (process.env.NODE_ENV === 'production') {
+  module.exports.plugins = (module.exports.plugins || []).concat([
+    new MiniCssExtractPlugin({
+      filename: '/assets/[name].css',
+    }),
+  ])
 }
