@@ -1,5 +1,8 @@
 <template>
-  <input type="text" @keyup="updateValue">
+  <input 
+    type="text" 
+    @keyup="updateValue"
+    onfocus="this.select()">
 </template>
 <script>
 export default {
