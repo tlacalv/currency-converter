@@ -125,8 +125,8 @@ export default {
     latest.then(latest => {
       let symbols = getSymbols();
       this.symbols = symbols.symbols;
-      this.rates = latest.rates;
-      this.rates= {...this.rates, EUR: 1};
+      this.rates = latest.conversion_rates;
+      // this.rates= {...this.rates, EUR: 1};
       this.date = latest.date;
       
     });

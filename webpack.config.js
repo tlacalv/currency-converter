@@ -1,19 +1,21 @@
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-var path = require('path')
+const VueLoaderPlugin = require("vue-loader/lib/plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const Dotenv = require("dotenv-webpack");
+
+var path = require("path");
 let proba = {
-  loader:MiniCssExtractPlugin.loader,
+  loader: MiniCssExtractPlugin.loader,
   options: {
-    publicPath: '../',
+    publicPath: "../",
   },
-}
+};
 module.exports = {
-  entry: './src/main.js',
+  entry: "./src/main.js",
   output: {
-    path: path.resolve(__dirname, './docs'),
-    filename: 'build.js',
-    publicPath: process.env.NODE_ENV !== 'production' ? '/' : './'
+    path: path.resolve(__dirname, "./docs"),
+    filename: "build.js",
+    publicPath: process.env.NODE_ENV !== "production" ? "/" : "./",
   },
   module: {
     rules: [
@@ -21,59 +23,57 @@ module.exports = {
         test: /\.html$/,
         use: [
           {
-            loader: 'html-loader',
+            loader: "html-loader",
           },
         ],
       },
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: "vue-loader",
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
+        loader: "babel-loader",
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/,
         use: [
-          
-          process.env.NODE_ENV !== 'production'
-            ? 'style-loader'
-            : proba,
-          'css-loader',
-        ]
+          process.env.NODE_ENV !== "production" ? "style-loader" : proba,
+          "css-loader",
+        ],
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
+        loader: "file-loader",
         options: {
-          name: '[name].[ext]?[hash]',
-          esModule: false
-        }
+          name: "[name].[ext]?[hash]",
+          esModule: false,
+        },
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        loader: 'file-loader',
+        loader: "file-loader",
         options: {
-          name: '[name].[ext]'
-        }
+          name: "[name].[ext]",
+        },
       },
-    ]
+    ],
   },
-  devtool: '#eval-source-map',
+  devtool: "#eval-source-map",
   plugins: [
     new VueLoaderPlugin(),
+    new Dotenv(),
     new HtmlWebpackPlugin({
-      template: './index.html',
-      filename: './index.html',
+      template: "./index.html",
+      filename: "./index.html",
     }),
-  ]
-}
-if (process.env.NODE_ENV === 'production') {
+  ],
+};
+if (process.env.NODE_ENV === "production") {
   module.exports.plugins = (module.exports.plugins || []).concat([
     new MiniCssExtractPlugin({
-      filename: '/assets/[name].css',
+      filename: "/assets/[name].css",
     }),
-  ])
+  ]);
 }
