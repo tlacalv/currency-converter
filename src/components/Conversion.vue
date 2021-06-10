@@ -38,7 +38,7 @@
 import { getLatest, getSymbols } from '../api';
 import SelectRate from './SelectRate.vue';
 import InputCurrency from './InputCurrency.vue';
-import latest from '../mockups/latest.json';
+import dayjs from 'dayjs';
 
 let validNumber = (number) => {
   if (isNaN(number) || number.length===0){
@@ -126,8 +126,7 @@ export default {
       let symbols = getSymbols();
       this.symbols = symbols.symbols;
       this.rates = latest.conversion_rates;
-      // this.rates= {...this.rates, EUR: 1};
-      this.date = latest.date;
+      this.date = dayjs(latest.time_last_update_utc).format("DD/MM/YYYY HH:mm");
       
     });
   }
